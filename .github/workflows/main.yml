@@ -17,7 +17,7 @@ jobs:
 
       - name: Start Live Stream
         run: |
-          ffmpeg -re -stream_loop -1 -i "puzzle.mp4" \
+          ffmpeg -re -stream_loop -1 -i "puzzle.mp4.mp4" \
           -c:v libx264 -preset ultrafast -tune zerolatency -b:v 4500k \
           -maxrate 4500k -bufsize 9000k -pix_fmt yuv420p -g 60 \
           -c:a aac -b:a 128k -ar 44100 \
