@@ -1,0 +1,24 @@
+name: Super Fast YouTube Live
+
+on:
+  workflow_dispatch: # Allows manual start
+
+jobs:
+  stream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Start Live Stream
+        run: |
+          ffmpeg -re -stream_loop -1 -i "puzzle.mp4" \
+          -c:v libx264 -preset ultrafast -tune zerolatency -b:v 4500k \
+          -maxrate 4500k -bufsize 9000k -pix_fmt yuv420p -g 60 \
+          -c:a aac -b:a 128k -ar 44100 \
+          -f flv "rtmp://a.rtmp.youtube.com/live2/hxkg-a2g1-b7fm-x96d-4qxh"
